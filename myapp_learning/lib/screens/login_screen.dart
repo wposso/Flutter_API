@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_unnecessary_containers, sized_box_for_whitespace
+// ignore_for_file: avoid_unnecessary_containers, sized_box_for_whitespace, no_leading_underscores_for_local_identifiers, avoid_print, annotate_overrides
 
 import "package:flutter/material.dart";
 import "package:font_awesome_flutter/font_awesome_flutter.dart";
@@ -11,18 +11,48 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController userController = TextEditingController();
-  bool activeBorderError = false;
-  String usuario = 'wposso';
+  //Controllers
+  final TextEditingController controllerUsername = TextEditingController();
+  final TextEditingController controllerPassword = TextEditingController();
 
-  void validator() {
+  //Variables
+  bool activeBorderError = false;
+  bool _showIcon = false;
+  bool _obscureText = false;
+
+  //Credentials
+  final String username = 'admin';
+  final String password = 'password';
+
+  //Methods
+  void signIn() {
+    var _username = username;
+    var _password = password;
     setState(() {
-      if (userController.text == usuario) {
-        activeBorderError = false;
-        print('Success');
+      if (_username == controllerUsername.text &&
+          _password == controllerPassword.text) {
+        Navigator.pushNamed(context, 'homePage');
       } else {
-        activeBorderError = true;
+        print('Credentials invalid');
       }
+      clearFields();
+    });
+  }
+
+  void clearFields() {
+    controllerUsername.clear();
+    controllerPassword.clear();
+  }
+
+  void initState() {
+    super.initState();
+    controllerPassword.addListener(() {
+      setState(() {
+        if (controllerPassword.text.isNotEmpty && !_showIcon) {
+          _showIcon = true;
+          _obscureText = true;
+        }
+      });
     });
   }
 
@@ -51,8 +81,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       Text(
                         "Welcome back you've \n been missed!",
-                        style:
-                            TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700, fontSize: 20),
                         textAlign: TextAlign.center,
                       ),
                     ],
@@ -68,18 +98,19 @@ class _LoginScreenState extends State<LoginScreen> {
                         width: 357,
                         height: 64,
                         child: TextFormField(
-                          controller: userController,
+                          controller: controllerUsername,
                           decoration: InputDecoration(
                               contentPadding: const EdgeInsets.only(
                                   top: 20, left: 20, bottom: 20, right: 35),
                               filled: true,
-                              fillColor: const Color.fromRGBO(241, 244, 255, 1.0),
+                              fillColor:
+                                  const Color.fromRGBO(241, 244, 255, 1.0),
                               label: const Text(
                                 'Email',
                                 style: TextStyle(
                                     color: Color.fromRGBO(98, 98, 98, 1.0)),
                               ),
-                              errorText: activeBorderError? 'Error' : null,
+                              errorText: activeBorderError ? 'Error' : null,
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10)),
                               enabledBorder: OutlineInputBorder(
@@ -107,17 +138,28 @@ class _LoginScreenState extends State<LoginScreen> {
                         width: 357,
                         height: 64,
                         child: TextFormField(
-                          obscureText: true,
+                          controller: controllerPassword,
+                          obscureText: _obscureText,
                           decoration: InputDecoration(
                               contentPadding: const EdgeInsets.only(
                                   top: 20, left: 20, bottom: 20, right: 35),
                               filled: true,
-                              fillColor: const Color.fromRGBO(241, 244, 255, 1.0),
+                              fillColor:
+                                  const Color.fromRGBO(241, 244, 255, 1.0),
                               label: const Text(
                                 'Password',
                                 style: TextStyle(
                                     color: Color.fromRGBO(98, 98, 98, 1.0)),
                               ),
+                              suffixIcon: _showIcon
+                                  ? IconButton(
+                                      onPressed: () {
+                                        _obscureText = !_obscureText;
+                                      },
+                                      icon: Icon(_obscureText
+                                          ? Icons.visibility
+                                          : Icons.visibility_off))
+                                  : null,
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10)),
                               enabledBorder: OutlineInputBorder(
@@ -171,7 +213,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               shadowColor:
                                   const Color.fromRGBO(203, 214, 255, 1.0),
                               elevation: 20),
-                          onPressed: () {validator();},
+                          onPressed: () {
+                            signIn();
+                          },
                           child: const Text(
                             'Sign in',
                             style: TextStyle(
@@ -216,14 +260,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
-                            padding: const EdgeInsets.only(
-                                left: 20, right: 20, top: 10, bottom: 10),
-                            decoration: const BoxDecoration(
-                                color: Color.fromRGBO(236, 236, 236, 1.0),
-                                borderRadius: BorderRadiusDirectional.all(
-                                    Radius.circular(10))),
-                            child: const FaIcon(FontAwesomeIcons.google)
-                          ),
+                              padding: const EdgeInsets.only(
+                                  left: 20, right: 20, top: 10, bottom: 10),
+                              decoration: const BoxDecoration(
+                                  color: Color.fromRGBO(236, 236, 236, 1.0),
+                                  borderRadius: BorderRadiusDirectional.all(
+                                      Radius.circular(10))),
+                              child: const FaIcon(FontAwesomeIcons.google)),
                           const SizedBox(
                             width: 10,
                           ),

@@ -56,7 +56,7 @@ class DrawWidget extends StatelessWidget {
                                         const SizedBox(
                                           height: 40,
                                         ),
-                                        Container(
+                                        SizedBox(
                                           height: 550,
                                           child: SingleChildScrollView(
                                             scrollDirection: Axis.vertical,
