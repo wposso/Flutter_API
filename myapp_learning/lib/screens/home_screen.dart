@@ -8,9 +8,14 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue,
-      appBar: AppBar(),
-      bottomNavigationBar: const CurveWidget()
-    );
+        appBar: AppBar(
+          title: const Text('Home page'),
+          foregroundColor: Colors.black,
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(10.5),
+          child: ElevatedButton(onPressed: () {}, child: const Text('Demo')),
+        ),
+        bottomNavigationBar: const FooterWidget(finalIndex: 0,));
   }
 }

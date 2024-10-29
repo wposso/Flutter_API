@@ -6,41 +6,37 @@ class CurveWidget extends StatelessWidget {
   const CurveWidget({super.key});
   @override
   Widget build(BuildContext context) {
-    return CurvedNavigationBar(
-      items: const[
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            FaIcon(FontAwesomeIcons.heart),
-            Text(
-              'Favorite',
-              style: TextStyle(
-                fontSize: 10
-              ),)
-          ],
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            FaIcon(FontAwesomeIcons.home),
-            Text(
-              'Home',
-              style: TextStyle(
-                fontSize: 10
-              ),)
-          ],
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            FaIcon(FontAwesomeIcons.contao),
-            Text(
-              'Contact',
-              style: TextStyle(
-                fontSize: 10
-              ),)
-          ],
-        )
-      ]);
+    return CurvedNavigationBar(items: const [
+      Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          FaIcon(FontAwesomeIcons.heart),
+          Text(
+            'Favorite',
+            style: TextStyle(fontSize: 10),
+          )
+        ],
+      ),
+      Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          FaIcon(FontAwesomeIcons.home),
+          Text(
+            'Home',
+            style: TextStyle(fontSize: 10),
+          )
+        ],
+      ),
+      Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          FaIcon(FontAwesomeIcons.contao),
+          Text(
+            'Contact',
+            style: TextStyle(fontSize: 10),
+          )
+        ],
+      )
+    ]);
   }
 }

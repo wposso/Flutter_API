@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_unnecessary_containers, sized_box_for_whitespace, no_leading_underscores_for_local_identifiers, avoid_print
+// ignore_for_file: avoid_unnecessary_containers, sized_box_for_whitespace, no_leading_underscores_for_local_identifiers, avoid_print, annotate_overrides
 
 import "package:flutter/material.dart";
 import "package:font_awesome_flutter/font_awesome_flutter.dart";
@@ -17,6 +17,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   //Variables
   bool activeBorderError = false;
+  bool _showIcon = false;
+  bool _obscureText = false;
 
   //Credentials
   final String username = 'admin';
@@ -40,6 +42,18 @@ class _LoginScreenState extends State<LoginScreen> {
   void clearFields() {
     controllerUsername.clear();
     controllerPassword.clear();
+  }
+
+  void initState() {
+    super.initState();
+    controllerPassword.addListener(() {
+      setState(() {
+        if (controllerPassword.text.isNotEmpty && !_showIcon) {
+          _showIcon = true;
+          _obscureText = true;
+        }
+      });
+    });
   }
 
   @override
@@ -125,7 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: 64,
                         child: TextFormField(
                           controller: controllerPassword,
-                          obscureText: true,
+                          obscureText: _obscureText,
                           decoration: InputDecoration(
                               contentPadding: const EdgeInsets.only(
                                   top: 20, left: 20, bottom: 20, right: 35),
@@ -137,6 +151,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                 style: TextStyle(
                                     color: Color.fromRGBO(98, 98, 98, 1.0)),
                               ),
+                              suffixIcon: _showIcon
+                                  ? IconButton(
+                                      onPressed: () {
+                                        _obscureText = !_obscureText;
+                                      },
+                                      icon: Icon(_obscureText
+                                          ? Icons.visibility
+                                          : Icons.visibility_off))
+                                  : null,
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10)),
                               enabledBorder: OutlineInputBorder(
